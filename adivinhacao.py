@@ -1,8 +1,12 @@
+#Importação da biblioteca Random
+import random
+
 print("*********************************")
 print("Bem vindo ao jogo de Adivinhação!")
 print("*********************************")
 
-numero_secreto = 42
+# Gerando um número inteiro de 0 a 99
+numero_secreto = random.randrange(100)
 
 total_de_tentativas = 3
 
@@ -34,4 +38,4 @@ for rodada in range(1, total_de_tentativas + 1):
         print("\nDigite um número entre 1 e 100!\n")
         continue
 
-print("Fim do jogo!")
+print("Fim do jogo! O número secreto é {}".format(numero_secreto))

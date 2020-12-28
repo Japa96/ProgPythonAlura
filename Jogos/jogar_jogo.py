@@ -1,4 +1,4 @@
-import adivinhacao
+from Jogos import adivinhacao
 
 print("*********************************")
 print("*Bem vindo - Escolha o seu jogo!*")

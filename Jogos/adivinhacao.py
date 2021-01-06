@@ -10,9 +10,9 @@ def jogar():
     # Gerando um número inteiro de 0 a 99
     numero_secreto = random.randrange(1,101)
     total_de_tentativas = 0
-    pontuacao = 1000
+    pontos = 1000
 
-    print("Qual o níve de dificuldade do jogo?\n")
+    print("Qual o nível de dificuldade do jogo?\n")
     print("Fácil (1)")
     print("Médio (2)")
     print("Difícil (3)")
@@ -29,7 +29,7 @@ def jogar():
     for rodada in range(1, total_de_tentativas + 1):
 
         print("Tentativa {} de {}".format(rodada, total_de_tentativas))
-        print("Sua pontuacação é de {}".format(pontuacao))
+        print("Sua pontuacação é de {}".format(pontos))
 
         # Usuário vai inputar o número que ele acredita que seja o número secreto!
         chute_str = input("Digite um número entre 1 e 100: ")
@@ -53,9 +53,9 @@ def jogar():
 
                 # Calculo de perda de pontos.
                 # Exemplo : Chute igual a 40 e o numero é 20, perde 20 pontos.
-                # Usar a função abs() para pegar sopmente o número independente do sinal.
+                # Usar a função abs() para pegar somente o número independente do sinal.
                 pontos_perdidos = abs(numero_secreto - chute)
-                pontos = pontuacao - pontos_perdidos
+                pontos = pontos - pontos_perdidos
 
         else:
             print("\nDigite um número entre 1 e 100!\n")

@@ -1,10 +1,21 @@
+import random
+
 def jogar():
 
     print("*********************************")
     print("Bem vindo ao jogo de Adivinhação!")
     print("*********************************\n")
 
-    palavra_secreta = "ler".upper()
+    arquivo = open("palavras.txt", "r")
+    palavras = []
+
+    for linha_arquivo in arquivo:
+        linha_arquivo = linha_arquivo.strip().upper()
+        palavras.append(linha_arquivo)
+
+    arquivo.close()
+
+    palavra_secreta = random.choice(palavras)
 
     # Esse recurso abaixo se chama List Comprehension
     letras_acertadas = ["_" for letra in palavra_secreta]

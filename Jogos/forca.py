@@ -2,9 +2,50 @@ import random
 
 def jogar():
 
+    imprime_mensagem_abertura()
+
+    #Aqui a função inicializa a palavra secreta e retorna ela mesma.
+    palavra_secreta = carrega_palavra_secreta()
+
+    # Esse recurso abaixo se chama List Comprehension
+    letras_acertadas = inicializa_letras_acertadas(palavra_secreta)
+
+    print(letras_acertadas)
+
+    enforcou = False
+    acertou = False
+    erros = 0
+
+    # Enquanto não enforcou e não acertou, fica no loop game.
+    while(not enforcou and not acertou):
+
+        chute = pede_chute()
+
+        if(chute in palavra_secreta):
+            marca_chute_correto(chute,letras_acertadas,palavra_secreta)
+        else:
+            erros +=1
+            print("Ops, você errou a letra! Faltam {} tentativas.".format(6-erros))
+            desenha_forca(erros)
+
+        enforcou = erros == 7
+        acertou = "_" not in letras_acertadas
+        print(letras_acertadas)
+
+    if(acertou):
+        mensagem_vencedor()
+
+    else:
+        mensagem_perdedor(palavra_secreta)
+
+
+def imprime_mensagem_abertura():
+
     print("*********************************")
     print("Bem vindo ao jogo de Adivinhação!")
     print("*********************************\n")
+
+def carrega_palavra_secreta():
 
     arquivo = open("palavras.txt", "r")
     palavras = []
@@ -16,47 +57,109 @@ def jogar():
     arquivo.close()
 
     palavra_secreta = random.choice(palavras)
+    return palavra_secreta
 
-    # Esse recurso abaixo se chama List Comprehension
-    letras_acertadas = ["_" for letra in palavra_secreta]
+def inicializa_letras_acertadas(palavra_secreta):
+    return ["_" for letra in palavra_secreta]
 
-    enforcou = False
-    acertou = False
-    erros = 0
+def pede_chute():
+    chute = input('Qual a letra? ')
 
-    print(letras_acertadas)
+    # A função strip vai remover qualquer espaço em branco.
+    chute = chute.strip().upper()
+    return chute
 
-    # Enquanto não enforcou e não acertou, fica no loop game.
-    while(not enforcou and not acertou):
+def marca_chute_correto(chute,letras_acertadas,palavra_secreta):
+    index = 0
+    for letra in palavra_secreta:
+        if (chute == letra):
+            # Abaixo estamos acessando a letra informando pelo Index da posição da lista.
+            letras_acertadas[index] = letra
+        index += 1
 
-        chute = input('Qual a letra? ')
+def mensagem_perdedor(palavra_secreta):
+    print("Puxa, você foi enforcado!")
+    print("A palavra era {}".format(palavra_secreta))
+    print("    _______________         ")
+    print("   /               \       ")
+    print("  /                 \      ")
+    print("//                   \/\  ")
+    print("\|   XXXX     XXXX   | /   ")
+    print(" |   XXXX     XXXX   |/     ")
+    print(" |   XXX       XXX   |      ")
+    print(" |                   |      ")
+    print(" \__      XXX      __/     ")
+    print("   |\     XXX     /|       ")
+    print("   | |           | |        ")
+    print("   | I I I I I I I |        ")
+    print("   |  I I I I I I  |        ")
+    print("   \_             _/       ")
+    print("     \_         _/         ")
+    print("       \_______/           ")
 
-        # A função strip vai remover qualquer espaço em branco.
-        chute = chute.strip().upper()
+def mensagem_vencedor():
+    print("Parabéns, você ganhou!")
+    print("       ___________      ")
+    print("      '._==_==_=_.'     ")
+    print("      .-\\:      /-.    ")
+    print("     | (|:.     |) |    ")
+    print("      '-|:.     |-'     ")
+    print("        \\::.    /      ")
+    print("         '::. .'        ")
+    print("           ) (          ")
+    print("         _.' '._        ")
+    print("        '-------'       ")
 
-        if(chute in palavra_secreta):
-            index = 0
-            for letra in palavra_secreta:
-                if (chute == letra):
+def desenha_forca(erros):
+    print("  _______     ")
+    print(" |/      |    ")
 
-                    # Abaixo estamos acessando a letra informando pelo Index da posição da lista.
-                    letras_acertadas[index] = letra
-                index += 1
+    if(erros == 1):
+        print(" |      (_)   ")
+        print(" |            ")
+        print(" |            ")
+        print(" |            ")
 
+    if(erros == 2):
+        print(" |      (_)   ")
+        print(" |      \     ")
+        print(" |            ")
+        print(" |            ")
 
-        else:
-            erros +=1
-            print("Ops, você errou a letra! Faltam {} tentativas.".format(6-erros))
+    if(erros == 3):
+        print(" |      (_)   ")
+        print(" |      \|    ")
+        print(" |            ")
+        print(" |            ")
 
-        enforcou = erros == 6
-        acertou = "_" not in letras_acertadas
-        print(letras_acertadas)
+    if(erros == 4):
+        print(" |      (_)   ")
+        print(" |      \|/   ")
+        print(" |            ")
+        print(" |            ")
 
-    if(acertou):
-        print("Parabéns! Você acertou a palavra secreta.")
+    if(erros == 5):
+        print(" |      (_)   ")
+        print(" |      \|/   ")
+        print(" |       |    ")
+        print(" |            ")
 
-    else:
-        print("Que pena, você não acertou a palavra. Continue jogando :)")
+    if(erros == 6):
+        print(" |      (_)   ")
+        print(" |      \|/   ")
+        print(" |       |    ")
+        print(" |      /     ")
+
+    if (erros == 7):
+        print(" |      (_)   ")
+        print(" |      \|/   ")
+        print(" |       |    ")
+        print(" |      / \   ")
+
+    print(" |            ")
+    print("_|___         ")
+    print()
+
 
 if(__name__ == "__main__"):
     jogar()
